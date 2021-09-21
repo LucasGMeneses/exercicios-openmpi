@@ -11,11 +11,11 @@ void broadcast(int d, int my_id, int source, int data, MPI_Datatype type){
         if ((my_virtual_id & mask) == 0){
             if ((my_virtual_id & nos) == 0){
                 int virtual_dest = my_virtual_id ^ nos;
-                MPI_Send(&data, 1, type, virtual_dest ^ source, 1, MPI_COMM_WORLD);
+                MPI_Send(&data, 1, type, virtual_dest ^ source, 0, MPI_COMM_WORLD);
             }
             else{
                 int virtual_source = my_virtual_id ^ nos;
-                MPI_Recv(&data, 1, type, virtual_source ^ source, 1, MPI_COMM_WORLD, NULL);
+                MPI_Recv(&data, 1, type, virtual_source ^ source, 0, MPI_COMM_WORLD, NULL);
             }
         }
     }
