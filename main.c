@@ -1,33 +1,41 @@
+/* Aluno: Lucas Gomes Meneses */
 #include <mpi.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+/* gerador de numeros aleatorios */
+void numGenerator(int A[], int n){
+    for (int i = 0; i < n; i++){
+        A[i] = rand() % n;
+        printf("%d ", A[i]);
+    }
+    printf("\n");
+}
 
 int main(int argc, char *argv[]){
     int npes, myrank;
-    int n = 100;
+    int n = 100; /* tamalho do vetor */
     int A[n];
-    int x = 15;
-    int result;
+    int x = 39;
+    int result; /* resultado final */
+    
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &npes);
     MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
-    int n_local = (n / npes) + 1;
+    int n_local = (n / npes) + 1; /* tamanho do vetor local d cada processador */
     int A_local[n_local];
     if (myrank == 0){
         /* gerando numeros p/ vetor A*/
-        for (int i = 0; i < n; i++){
-            A[i] = rand() % n;
-            printf("%d ", A[i]);
-        }
-        printf("\n");
-        /* dividindo o vetor entreos processadores */
-        int counts[npes];
+        numGenerator(A,n);
+        /* dividindo o vetor entre os processadores */
+        
+        /* qtd de dados q cada processador deve receber */
+        int counts[npes]; 
         for (int i = 0; i < npes; i++){
             counts[i] = n_local;
         }
-        
+        /* deslocamentos */
         int displ[npes];
         for (int i = 0; i < npes; i++){
             displ[i] = i*n_local;
@@ -52,7 +60,6 @@ int main(int argc, char *argv[]){
     {
         printf("O numero %d aparece no vetor A %d vez(es)!\n",x,result);
     }
-    
     
     MPI_Finalize();
     return 0;
