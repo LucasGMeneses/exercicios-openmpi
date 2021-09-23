@@ -28,6 +28,7 @@ int main(int argc, char *argv[]){
     MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
         //d = 3 para np = 8
         broadcast(3, myrank, 0, 10, MPI_INT);
+        
     MPI_Finalize();
     return 0;
 }
