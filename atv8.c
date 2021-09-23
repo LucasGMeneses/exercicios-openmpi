@@ -31,15 +31,15 @@ int main(int argc, char *argv[]){
         /* dividindo o vetor entre os processadores */
         
         /* qtd de dados q cada processador deve receber */
-        int counts[npes]; 
-        for (int i = 0; i < npes; i++){
-            counts[i] = n_local;
-        }
+        int counts[npes];
         /* deslocamentos */
         int displ[npes];
+
         for (int i = 0; i < npes; i++){
+            counts[i] = n_local;
             displ[i] = i*n_local;
         }
+
         MPI_Scatterv(A, counts, displ, MPI_INT, &A_local, n_local, MPI_INT, 0, MPI_COMM_WORLD);
          
     }else {
