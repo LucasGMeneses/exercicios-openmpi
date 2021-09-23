@@ -7,12 +7,6 @@ void resetVetor(int v[], int n){
         v[i] = 0;
     }
 }
-void print(int A[], int n){
-    for (int i = 0; i < n; i++){
-        printf("%d ", A[i]);
-    }
-    printf("\n");
-}
 
 int main(int argc, char *argv[]){
     int npes, myrank;
