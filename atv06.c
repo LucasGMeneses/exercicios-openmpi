@@ -5,7 +5,7 @@
 void broadcast(int d, int my_id, int source, int data, MPI_Datatype type){
     int my_virtual_id = my_id ^ source;
     int mask = pow(2,d) - 1 ; 
-    for (int i = d - 1; i >= 0 ; i--){
+    for (int i = d-1; i >= 0; i--){
         int nos = pow(2,i); // qtd de nos
         mask = mask ^ nos;
         if ((my_virtual_id & mask) == 0){
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
     MPI_Comm_size(MPI_COMM_WORLD, &npes);
     MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
         //d = 3 para np = 8
-        broadcast(3, myrank, 0, 10, MPI_INT);
+        broadcast(2, myrank, 0, 10, MPI_INT);
         
     MPI_Finalize();
     return 0;
